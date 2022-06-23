@@ -1,0 +1,26 @@
+version: "3.6"
+services:
+  elasticsearch:
+    image: webhippie/elasticsearch:6.4-arm64v8
+    ports:
+     - "9200:9200"
+    volumes:
+      - ./esdata1:/var/lib/elasticsearch/data
+    environment:
+      - http.host=0.0.0.0
+      - transport.host=127.0.0.1
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - mdc-local
+
+networks:
+  mdc-local:
+
+volumes:
+    esdata1:
+      driver: local
